@@ -6,11 +6,12 @@ Proj3k-Postoffice-nearme/
 │   ├── Sender.h            # class ผู้ส่ง
 │   ├── DeliveryStaff.h     # class พนักงานส่งของ
 │   └── PackageNode.h       # โหนดของ binary tree
-│   └── User.h              # class user
-│   └── LoginSystem.h       # class LoginSystem
+│   └── User.h              # class user กับ Loginsystem
+│   
 │
 ├── .cpp/                    # ไฟล์ source (.cpp)
 │   ├── main.cpp            # จุดเริ่มโปรแกรม
+|   ├── test.cpp            # เทส
 │   ├── Sender.cpp          #ฟังชั่น Sender.cpp
 │   ├── DeliveryStaff.cpp   #ฟังชั่น DeliveryStaff.cpp
 │   └── BinaryTree.cpp      # โครงสร้างต้นไม้ไบนารีเรียงตามน้ำหนัก

@@ -38,10 +38,6 @@ public :
     }
     return false; // ถ้าข้อมูลไม่ตรงกัน
 }
-
-
-
-
     //สำหรับRegister
      // ฟังก์ชันสำหรับบันทึกข้อมูลผู้ใช้ลงในไฟล์
      void saveToFile(const string& filename) {
@@ -67,8 +63,6 @@ public :
         }
         return false; // ถ้าไม่พบชื่อผู้ใช้ในไฟล์
     }
-
-
     static bool isValidUsername(const string& username) {
         // ใช้ regex ตรวจสอบว่า Password ประกอบด้วยตัวอักษรภาษาอังกฤษ, ตัวเลข และอักขระพิเศษที่อนุญาต (_ - .)
         regex pattern("^[a-zA-Z0-9ก-๙_-]+$");  // ต้องมีตัวอักษรและตัวเลขอย่างน้อย 8 ตัว
@@ -82,58 +76,64 @@ public :
         return regex_match(password, pattern);  // ตรวจสอบว่า username ตรงกับ pattern นี้หรือไม่
     }
 
+    
 
+    
+void LoginSystem(){
+    // ล็อกอิน
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+cout<<"==================================================="<<endl;
 
-
-
-    void LoginSystem(){
-        // ล็อกอิน
-        cout << "Enter username: ";
-        cin >> username;
-        cout << "Enter password: ";
-        cin >> password;
-   
-        // เช็คข้อมูลการล็อกอิน
-        if (User::login("users.txt", username, password)) 
-        {
-            cout << "Login successful!" << endl;
-        } 
-        else {
-            cout << "Invalid username or password!" << endl;
-        }
-   
+    // เช็คข้อมูลการล็อกอิน
+    if (User::login("users.txt", username, password)) 
+    {
+        cout << "Login successful!" << endl;
+       
     } 
-
-   
-   
-   void RegisterSystem(){
-       cout << "Enter username: ";
-       cin >> username;
-   
-       // เช็คว่ามีชื่อผู้ใช้นี้ในไฟล์หรือไม่
-       if (User::isUsernameTaken("users.txt", username))
-        {
-           cout << "Username is already taken! Please choose a different one." << endl;
-       } 
-       if(User::isValidUsername(username)==false)
-       {
-        cout << "Only thai eng number and _ - " << endl;
-       }
-
-       else {
-           cout << "Enter password: ";
-           cin >> password;
-        if(User::isValidPassword(password)==true){
-        // สร้าง object ของ User และบันทึกข้อมูลลงในไฟล์
-        User newUser(username, password);
-        newUser.saveToFile("users.txt");
-        cout << "User registered successfully!" << endl;
-       }
-       else  cout << "Only eng number _ -  and 8 ตัว!" << endl;
+    else {
+        cout << "Invalid username or password!" << endl;
+        
     }
+} 
+
+
+
+void RegisterSystem(){
+   cout << "Enter username: ";
+   cin >> username;
+
+   // เช็คว่ามีชื่อผู้ใช้นี้ในไฟล์หรือไม่
+   if (User::isUsernameTaken("users.txt", username))
+    {
+       cout << "Username is already taken! Please choose a different one." << endl;
+   } 
+   if(User::isValidUsername(username)==false)
+   {
+    cout << "Only thai eng number and _ - " << endl;
    }
 
+   else {
+       cout << "Enter password: ";
+       cin >> password;
+    if(User::isValidPassword(password)==true){
+    // สร้าง object ของ User และบันทึกข้อมูลลงในไฟล์
+    User newUser(username, password);
+    newUser.saveToFile("users.txt");
+    cout << "User registered successfully!" << endl;
+   }
+   else  cout << "Only eng number _ -  and 8 ตัว!" << endl;
+}
+}
+
 };
+
+
+
+
+
 
 
 #endif

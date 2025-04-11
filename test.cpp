@@ -1,35 +1,20 @@
-#include <iostream>
-#include <fstream>
+#include <iostream>  
 #include <string>
-#include <vector>
+#include <fstream>
+#include <regex> 
 
-#include"User.h"
+#include "User.h"
+#include "Menu.h"
+#include "html.h"
+
+
 using namespace std;
 
-int main() {
-    int choice;
-    string username, password;
 
-    cout << "1. Register User" << endl;
-    cout << "2. Show Registered Users" << endl;
-    cout << "Enter your choice: ";
-    cin >> choice;
+int main(){
 
-    if (choice == 1) {
-        // ล็อกอิน
-        cout << "Enter username: ";
-        cin >> username;
-        cout << "Enter password: ";
-        cin >> password;
+    html();
+       
+}
 
-        // เช็คข้อมูลการล็อกอิน
-        if (User::login("users.txt", username, password)) {
-            cout << "Login successful!" << endl;
-        } else {
-            cout << "Invalid username or password!" << endl;
-        }
 
-    } else {
-        cout << "Invalid choice!" << endl;
-    }
-} 

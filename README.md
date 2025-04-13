@@ -17,7 +17,8 @@ Proj3k-Postoffice-nearme/
 │   └── BinaryTree.cpp      # โครงสร้างต้นไม้ไบนารีเรียงตามน้ำหนัก
 │
 ├── data/                   # ข้อมูลจำลองหรือเก็บไฟล์บันทึก
-│   └── dummy_data.txt      #dummy_data.txt = ไฟล์ที่ใส่ข้อมูลจำลองไว้ใช้สำหรับ ทดสอบโปรแกรม 
+│   └── packages.txt     #ข้อมูลสินค้า 
+│   └── packages.txt     #ข้อมูลคนใช้
 │
 │
 ├── README.md               # อธิบายโปรเจกต์

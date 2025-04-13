@@ -19,9 +19,9 @@ LL::~LL() {
 
 void LL::show_all() {
     NODE* t = hol;
-    if (t == nullptr) {
+   /* if (t == nullptr) {
         cout << "No nodes to display." << endl; 
-    }
+    }*/
     for (int i = 0; i < size; i++) {
         t->show_node();
         t = t->move_next();

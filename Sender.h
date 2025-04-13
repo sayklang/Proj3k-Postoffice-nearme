@@ -17,10 +17,9 @@ private:
     string username;
 
 public:
-    Sender(int, string, string, string, float,string);
-    void generateTrackingNumber();
-     ~Sender();
-    string getTrackingNumber();
+    Sender(int, string, string, string, float,string,string);
+    static string generateTrackingNumber();
+    ~Sender();
     void show_node() override;
     void saveToFile(const string& filename);
     

@@ -5,7 +5,7 @@
 using namespace std;
 class DeliveryStaff {
     public:
-        void checkTracking(string trackingNumber);
+        void getReceiverAddress(string trackingNumber);
         void displayDeliveryInfo(string trackingNumber);
     };
     #endif

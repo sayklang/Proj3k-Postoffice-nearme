@@ -12,8 +12,8 @@ using namespace std;
 int main(){
 User user;
 int choice;
-
-
+while (choice!=3)
+{
 showMenu();
 choice=getChoice();
 
@@ -30,10 +30,12 @@ choice=getChoice();
         break;
     
     default:
+    cout << "\033[1;31m==================================================="<<endl;
     cout << "Invalid choice. Please try again.\n";
+    cout<<"===================================================\033[0m"<<endl;
         break;
-    }
-
-}
+    }//switch
+}//Loop
+}//main
 
 

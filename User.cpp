@@ -16,7 +16,7 @@ void User::LoginSystem() {
         cout << "\033[1;32m===================================================" << endl;
         cout << "Login successful!" << endl;
         cout << "===================================================\033[0m" << endl;
-        sender_menu(username);  // เรียกเมนูของผู้ส่งหลังจากล็อกอิน
+        sender_menu(username);  
     } else {
         cout << "\033[1;31m===================================================" << endl;
         cout << "Invalid username or password!" << endl;

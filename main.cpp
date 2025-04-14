@@ -16,11 +16,11 @@ while (choice!=3)
 {
 showMenu();
 choice=getChoice();
-if (choice=101)
+/*if (choice=101)
 {
 E3();
 }
-else
+else*/
     switch (choice)
     {
     case 1:

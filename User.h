@@ -79,7 +79,7 @@ public:
     void saveToFile(const string& filename) {
         ofstream outFile(filename, ios::app);
         if (outFile.is_open()) {
-            outFile << username << "," << password << endl;
+            outFile << username << " " << password << endl;
             outFile.close();
         } else {
             cout << "Failed to open file!" << endl;

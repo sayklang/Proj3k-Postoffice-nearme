@@ -43,74 +43,69 @@ void User::LoginSystem() {
 }
 
 void User::RegisterSystem() {
-    cout << "Enter username: ";
-    cin >> username;
+    bool validRegistration = false;
+    while (!validRegistration) {  // ลูปจนกว่าจะลงทะเบียนสำเร็จ
+        cout << "Enter username: ";
+        cin >> username;
 
-    // Clear the input buffer
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        // Clear the input buffer
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    if (User::isUsernameTaken("users.txt", username)) {
-        clearScreen();
-        cout << "\033[1;31m===================================================" << endl;
-        cout << "Username is already taken! Please choose a different one." << endl;
-        cout << "===================================================\033[0m" << endl;
-    } else if (!User::isValidUsername(username)) {
-        clearScreen();
-        cout << "\033[1;31m===================================================" << endl;
-        cout << "Only Thai/English letters, numbers, and _ - allowed." << endl;
-        cout << "===================================================\033[0m" << endl;
-    } else {
-        bool validPassword = false;
-        string password;
-        
-        while (!validPassword) {
-            cout << "Enter password (minimum 8 characters): ";
-            password = User::getPasswordMasked();
+        if (User::isUsernameTaken("users.txt", username)) {
+            clearScreen();
+            cout << "\033[1;31m===================================================" << endl;
+            cout << "Username is already taken! Please choose a different one." << endl;
+            cout << "===================================================\033[0m" << endl;
+        } else if (!User::isValidUsername(username)) {
+            clearScreen();
+            cout << "\033[1;31m===================================================" << endl;
+            cout << "Only Thai/English letters, numbers, and _ - allowed." << endl;
+            cout << "===================================================\033[0m" << endl;
+        } else {
+            bool validPassword = false;
+            string password;
             
-            if (password.length() < 8) {
-                cout << "\033[1;31m===================================================" << endl;
-                cout << "Password must be at least 8 characters long." << endl;
-                cout << "===================================================\033[0m" << endl;
-                cout << "Please try again." << endl;
-            } else if (!User::isValidPassword(password)) {
-                cout << "\033[1;31m===================================================" << endl;
-                cout << "Password can only contain letters, numbers, underscores, and hyphens." << endl;
-                cout << "===================================================\033[0m" << endl;
-                cout << "Please try again." << endl;
-            } else {
-                validPassword = true;
+            while (!validPassword) {
+                cout << "Enter password (minimum 8 characters): ";
+                password = User::getPasswordMasked();
+                
+                if (password.length() < 8) {
+                    cout << "\033[1;31m===================================================" << endl;
+                    cout << "Password must be at least 8 characters long." << endl;
+                    cout << "===================================================\033[0m" << endl;
+                    cout << "Please try again." << endl;
+                } else if (!User::isValidPassword(password)) {
+                    cout << "\033[1;31m===================================================" << endl;
+                    cout << "Password can only contain letters, numbers, underscores, and hyphens." << endl;
+                    cout << "===================================================\033[0m" << endl;
+                    cout << "Please try again." << endl;
+                } else {
+                    validPassword = true;
+                }
             }
+            
+            // At this point, we have a valid password
+            this->password = password;
+            
+            // Create a new user object with the username and password
+            User newUser(username, this->password);
+            
+            // Save to file
+            newUser.saveToFile("users.txt");
+            
+            clearScreen();
+            cout << "\033[1;32m===================================================" << endl;
+            cout << "User registered successfully!" << endl;
+            cout << "Username: " << username << endl;
+            cout << "===================================================\033[0m" << endl;
+            
+            // Add a pause here to see the message
+            cout << "Press Enter to continue...";
+            cin.get();
+            
+            validRegistration = true;  // Exit the loop since registration is successful
         }
-        
-        // At this point, we have a valid password
-        this->password = password;
-        
-        // Create a new user object with the username and password
-        User newUser(username, this->password);
-        
-        // Save to file
-        newUser.saveToFile("users.txt");
-        
-        clearScreen();
-        cout << "\033[1;32m===================================================" << endl;
-        cout << "User registered successfully!" << endl;
-        cout << "Username: " << username << endl;
-        cout << "===================================================\033[0m" << endl;
-        
-        // Add a pause here to see the message
-        cout << "Press Enter to continue...";
-        cin.get();
     }
 }
 
-// Implementation of the saveToFile method
-void User::saveToFile(const string& filename) {
-    ofstream outFile(filename, ios::app);
-    if (outFile.is_open()) {
-        outFile << username << " " << password << endl;
-        outFile.close();
-        cout << "User information saved successfully." << endl;
-    } else {
-        cout << "Failed to open file for writing!" << endl;
-    }
-}
+

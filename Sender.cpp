@@ -2,7 +2,6 @@
 #include "Sender.h"
 #include "User.h"  
 
-
 using namespace std;
 
 Sender::Sender(int l, string n, string a, string p, float w,string u,string t) : NODE(l) {
@@ -17,7 +16,7 @@ Sender::~Sender() {
     // Destructor code
 }
 
-void Sender::show_node() {
+void Sender::show_node()  {
     cout << "ชื่อผู้รับ: " << name << endl;
     cout << "ที่อยู่: " << address << endl;
     cout << "สินค้า: " << product << endl;

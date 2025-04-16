@@ -30,6 +30,17 @@ inline int sender_getChoice() {
     return c;
 }
 
+inline int sender_or_Deli() {
+    int c;
+    cout << "\n===== MENU =====" << endl;
+    cout << "1. Sender" << endl;
+    cout << "2. Delivery" << endl;
+    cout << "3. Exit" << endl;
+    cout << "Enter your choice: ";
+    cin >> c;
+    return c;
+}
+
 
 inline void E3(){
     cout << "................................................................:::::::......::::::::::::::::::::::::::::::.::......:.......................::::" << endl;

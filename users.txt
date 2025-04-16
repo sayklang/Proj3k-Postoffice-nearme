@@ -9,3 +9,4 @@ bit 00000000
 bitt 00000000
 bittt 00000000
 testtt 00000000
+kao asdasdasdasd

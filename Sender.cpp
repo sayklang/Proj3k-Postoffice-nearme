@@ -1,41 +1,48 @@
-#include <iostream>
 #include "Sender.h"
-#include "User.h"  
+#include <fstream> // สำหรับการอ่าน/เขียนไฟล์
 
-using namespace std;
+set<string> Sender::generatedTrackingNumbers; // การประกาศตัวแปร static
 
-Sender::Sender(int l, string n, string a, string p, float w,string u,string t) : NODE(l) {
+Sender::Sender(int l, string n, string a, string p, float w, string u) : NODE(l) {
     name = n;
     address = a;
     product = p;
     weight = w;
     username=u;
-    trackingNumber=t;
 }
 Sender::~Sender() {
-    // Destructor code
+  
 }
 
-void Sender::show_node()  {
+void Sender::show_node() {
     cout << "ชื่อผู้รับ: " << name << endl;
     cout << "ที่อยู่: " << address << endl;
     cout << "สินค้า: " << product << endl;
     cout << "น้ำหนัก: " << weight << " kg" << endl;
-    if (!trackingNumber.empty()) {
-        cout << "Tracking No: " << trackingNumber << endl;
-    }
 }
 
 string Sender::generateTrackingNumber() {
-    return "TN" + to_string(rand() % 1000000); // ทำให้สุ่มเลข 6 หลักได้
+    string trackingNumber;
+    do {
+        trackingNumber = "TN" + to_string(rand() % 1000000); // สุ่มเลข 6 หลัก
+    } while (generatedTrackingNumbers.find(trackingNumber) != generatedTrackingNumbers.end()); // ตรวจสอบเลขซ้ำ
+    generatedTrackingNumbers.insert(trackingNumber); // เก็บหมายเลขที่สุ่มแล้ว
+    return trackingNumber;
 }
 
-
-
+void Sender::saveToFile(const string& filename) {
+    ofstream outFile(filename, ios::app);
+    if (outFile.is_open()) {
+        outFile << username << " " << name << " " << address << " " << product << " " << weight << " " << generateTrackingNumber() << endl;
+        outFile.close();
+    } else {
+        cout << "Failed to open file!" << endl;
+    }
+}
 void sender_menu(string& username) {
     LL A;
     float w;
-    string n, a, p, t;
+    string n, a, p, t;  // ประกาศ t ไว้ก่อนใช้งาน
     int l;
     int choice;
 
@@ -52,11 +59,12 @@ void sender_menu(string& username) {
                 cin >> a;
                 cout << "Input สินค้า: ";
                 cin >> p;
-                cout << "Input น้ำไม่เบา: ";
+                cout << "Input น้ำหนัก: ";
                 cin >> w;
-                t = Sender::generateTrackingNumber();
+                // สร้าง tracking number ใหม่
+                t = Sender::generateTrackingNumber();  // กำหนดค่าให้ t ก่อนจะใช้
                 {
-                    Sender* z = new Sender(l, n, a, p, w, username, t);
+                    Sender* z = new Sender(l, n, a, p, w, username);  // ไม่ต้องส่ง t เพราะ tracking number ถูกสร้างโดยอัตโนมัติ
                     A.add_node(z);
                     z->saveToFile("packages.txt");
                 }
@@ -79,19 +87,6 @@ void sender_menu(string& username) {
         }
     } while (true); // ใช้ while(true) แล้วออกด้วย return/exit
 }
-
-
-
-void Sender::saveToFile(const string& filename) {
-    ofstream outFile(filename, ios::app);
-    if (outFile.is_open()) {
-        outFile << username << " " << name << " " << address << " " << product << " " << weight << " " << trackingNumber << endl;
-        outFile.close();
-    } else {
-        cout << "Failed to open file!" << endl;
-    }
-}
-
 
 void showUserPackages(string& username) {
     ifstream inFile("packages.txt");
@@ -122,7 +117,3 @@ void showUserPackages(string& username) {
 
     inFile.close();
 }
-
-
-
-

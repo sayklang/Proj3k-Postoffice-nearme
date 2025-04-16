@@ -27,16 +27,23 @@ void User::LoginSystem() {
         cout << "\033[1;32m===================================================\n";
         cout << "Login successful!\n";
         cout << "===================================================\033[0m" << endl;
-        sender_menu(username);
-        }
-        if(c=2){
-      //  Deli_menu(); //เพิ่ม Deli menu
-        }
-        if(c=3){
+    int c = 0;
+    while (true) {
+        c = sender_or_Deli();
+        clearScreen();
+        if (c == 1) {
+            sender_menu(username);
+        } else if (c == 2) {
+            // Deli_menu(); // ใส่เมนูของ Delivery
+        } else if (c == 3) {
+           break;
+        } 
+        else {
+            cout << "Invalid choice. Please try again.\n";
             break;
         }
-        else break;
     }
+
     } else {
         clearScreen();
         cout << "\033[1;31m===================================================\n";

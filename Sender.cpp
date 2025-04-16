@@ -16,7 +16,7 @@ Sender::~Sender() {
     // Destructor code
 }
 
-void Sender::show_node() {
+void Sender::show_node()  {
     cout << "ชื่อผู้รับ: " << name << endl;
     cout << "ที่อยู่: " << address << endl;
     cout << "สินค้า: " << product << endl;

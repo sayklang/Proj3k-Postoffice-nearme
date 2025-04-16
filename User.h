@@ -5,7 +5,7 @@
 #include <fstream>
 #include <regex>
 #include <termios.h>
-#include <unistd.h>  // Make sure we have this for usleep
+#include <unistd.h> // สำหรับ Linux
 
 using namespace std;
 
@@ -20,40 +20,35 @@ public:
         password = pass;
     }
 
-    User() : username(""), password("") {} //User user
+    User() : username(""), password("") {}
+
     friend class Sender;
 
-    // Password masking function for Unix/Linux systems
+    // สำหรับ Linux: แสดง * ตอนกรอกรหัสผ่าน
     static string getPasswordMasked() {
         string password;
         struct termios oldt, newt;
-        
-        // Save current terminal settings
+
         tcgetattr(STDIN_FILENO, &oldt);
         newt = oldt;
-        
-        // Disable echo
         newt.c_lflag &= ~ECHO;
         tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-        
-        // Read password
+
         char ch;
         while ((ch = getchar()) != '\n') {
-            if (ch == 127 || ch == 8) { // Backspace or Delete
+            if (ch == 127 || ch == 8) {
                 if (!password.empty()) {
-                    cout << "\b \b";
                     password.pop_back();
+                    cout << "\b \b";
                 }
             } else {
                 password += ch;
                 cout << '*';
+                cout.flush(); // ให้ * แสดงทันที
             }
         }
         cout << endl;
-        
-        // Restore terminal settings
         tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-        
         return password;
     }
 
@@ -76,15 +71,7 @@ public:
         return false;
     }
 
-    void saveToFile(const string& filename) {
-        ofstream outFile(filename, ios::app);
-        if (outFile.is_open()) {
-            outFile << username << " " << password << endl;
-            outFile.close();
-        } else {
-            cout << "Failed to open file!" << endl;
-        }
-    }
+    void saveToFile(const string& filename);
 
     static bool isUsernameTaken(const string& filename, const string& username) {
         ifstream inFile(filename);
@@ -102,24 +89,20 @@ public:
     }
 
     static bool isValidUsername(const string& username) {
-        regex pattern("^[a-zA-Z0-9ก-๙_-]+$");
-        return regex_match(username, pattern);
+        regex pattern("^[a-zA-Zก-๙_\\-][a-zA-Z0-9ก-๙_\\-]*$");
+        return regex_match(username, pattern) && username.find(' ') == string::npos;
     }
 
     static bool isValidPassword(const string& password) {
-        // First check for minimum length
-        if (password.length() < 8) {
-            return false;
-        }
-        
-        // Then check for valid characters
+        if (password.length() < 8) return false;
         regex pattern("^[a-zA-Z0-9_-]+$");
         return regex_match(password, pattern);
     }
+
     static bool usernameExists(const string& filename, const string& username) {
         ifstream inFile(filename);
         string existingUsername, existingPassword;
-        
+
         if (inFile.is_open()) {
             while (inFile >> existingUsername >> existingPassword) {
                 if (existingUsername == username) {

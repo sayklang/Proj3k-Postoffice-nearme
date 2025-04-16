@@ -35,15 +35,17 @@ string Sender::generateTrackingNumber() {
 void sender_menu(string& username) {
     LL A;
     float w;
-    string n, a, p,t;
+    string n, a, p, t;
     int l;
     int choice;
+
     cout << "Logged in as: " << username << endl;
+
     do {
         choice = sender_getChoice();
         switch (choice) {
             case 1:
-                l=(rand()%100000);
+                l = (rand() % 100000);
                 cout << "Input ชื่อผู้รับ: ";
                 cin >> n;
                 cout << "Input ที่อยู่: ";
@@ -54,26 +56,30 @@ void sender_menu(string& username) {
                 cin >> w;
                 t = Sender::generateTrackingNumber();
                 {
-                    Sender* z = new Sender(l, n, a, p, w,username,t);
+                    Sender* z = new Sender(l, n, a, p, w, username, t);
                     A.add_node(z);
                     z->saveToFile("packages.txt");
                 }
                 break;
             case 2:
-            cout << "แสดงข้อมูลของทุกพัสดุ: " << endl;
-          //  A.show_all();
-            cout << "--------------------------" << endl;
-            showUserPackages(username);
+                cout << "แสดงข้อมูลของทุกพัสดุ: " << endl;
+                // A.show_all(); // ถ้าใช้ linked list ก็ปลดคอมเมนต์อันนี้
+                cout << "--------------------------" << endl;
+                showUserPackages(username); // ฟังก์ชันแสดงพัสดุของ user นี้
                 break;
             case 3:
-                cout << "Exiting..." << endl;
-                break;
+                cout << "Going back to previous menu..." << endl;
+                return; // กลับไปหน้า sender_or_Deli()
+            case 4:
+                cout << "Exiting program..." << endl;
+                exit(0);
             default:
                 cout << "Invalid choice. Please try again." << endl;
                 break;
         }
-    } while (choice != 3);
+    } while (true); // ใช้ while(true) แล้วออกด้วย return/exit
 }
+
 
 
 void Sender::saveToFile(const string& filename) {

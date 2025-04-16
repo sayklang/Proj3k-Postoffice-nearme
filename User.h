@@ -17,7 +17,7 @@ public:
         password = pass;
     }
 
-    User() : username(""), password("") {}
+    User() : username(""), password("") {} //User user
     friend class Sender;
 
     bool checkLogin(string inputUser, string inputPass) {

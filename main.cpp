@@ -33,6 +33,7 @@ else*/
         break;
     case 3:
     cout << "Exiting...\n";
+    clearScreen();
         break;
     
     default:

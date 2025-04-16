@@ -28,6 +28,15 @@ void User::LoginSystem() {
         cout << "Login successful!\n";
         cout << "===================================================\033[0m" << endl;
         sender_menu(username);
+        }
+        if(c=2){
+      //  Deli_menu(); //เพิ่ม Deli menu
+        }
+        if(c=3){
+            break;
+        }
+        else break;
+    }
     } else {
         clearScreen();
         cout << "\033[1;31m===================================================\n";

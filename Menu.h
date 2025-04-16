@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include <iostream>
+#include "Utils.h"
 using namespace std;
 
 inline void showMenu() {
@@ -21,14 +22,18 @@ inline int getChoice() {
 
 inline int sender_getChoice() {
     int c;
-    cout << "\n===== MENU =====" << endl;
+    cout << "\n===== SENDER MENU =====" << endl;
     cout << "1. Input pussadu" << endl;
     cout << "2. Get Track" << endl;
-    cout << "3. Exit" << endl;
+    cout << "3. Back" << endl;
+    cout << "4. Exit" << endl;
     cout << "Enter your choice: ";
     cin >> c;
+    clearScreen();
+    
     return c;
 }
+
 
 inline int sender_or_Deli() {
     int c;
@@ -38,6 +43,7 @@ inline int sender_or_Deli() {
     cout << "3. Exit" << endl;
     cout << "Enter your choice: ";
     cin >> c;
+    clearScreen();
     return c;
 }
 

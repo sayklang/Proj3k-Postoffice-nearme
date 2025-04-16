@@ -7,7 +7,8 @@
 using namespace std;
 
 void User::LoginSystem() {
-    cout << "===================================================" << endl;
+    //cout << "===================================================" << endl;
+    clearScreen();
     cout << "Enter username: ";
     cin >> username;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -17,9 +18,10 @@ void User::LoginSystem() {
         cout << "\033[1;31m===================================================\n";
         cout << "Username does not exist. Please check your username.\n";
         cout << "===================================================\033[0m" << endl;
+        clearScreen();
         return;
     }
-
+    
     cout << "Enter password: ";
     password = User::getPasswordMasked();
 
@@ -55,7 +57,7 @@ void User::LoginSystem() {
 
 void User::RegisterSystem() {
     bool validUsername = false;
-
+    clearScreen();
     while (!validUsername) {
         cout << "Enter username: ";
         cin >> username;
@@ -73,11 +75,11 @@ void User::RegisterSystem() {
             cout << "\033[1;31m===================================================\n";
             cout << "Username must not start with a number.\n";
             cout << "===================================================\033[0m" << endl;
+            clearScreen();
         } else if (User::isUsernameTaken("users.txt", username)) {
             clearScreen();
-            cout << "\033[1;31m===================================================\n";
+            cout << "\033[1;31m=========================================================\n";
             cout << "Username is already taken! Please choose a different one.\n";
-            cout << "===================================================\033[0m" << endl;
         } else {
             validUsername = true;
         }

@@ -13,6 +13,7 @@ void Deli_menu(string& username) {
     int choice;
     cout << "Logged in as: " << username << endl;
     do {
+        clearScreen();
         choice = Deli_getChoice();
         switch (choice) {
             case 1: {

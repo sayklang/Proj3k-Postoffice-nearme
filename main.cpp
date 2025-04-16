@@ -2,10 +2,11 @@
 #include <string>
 #include <fstream>
 #include <regex> 
-
+#include <stdlib.h>
 #include "User.h"
 #include "Menu.h"
 #include "Utils.h"  // Include the new header
+
 
 using namespace std;
 
@@ -14,6 +15,7 @@ User user;
 int choice;
 while (choice!=3)
 {
+    system("cls");
 showMenu();
 choice=getChoice();
 /*if (choice=101)

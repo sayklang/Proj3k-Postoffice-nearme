@@ -20,10 +20,24 @@ void Sender::show_node() {
     cout << "สินค้า: " << product << endl;
     cout << "น้ำหนัก: " << weight << " kg" << endl;
 }
+void Sender::loadUsedTrackingNumbers(const string& filename) {
+    ifstream inFile(filename);
+    if (!inFile) return;
+
+    string user, name, address, product, trackingNumber;
+    float weight;
+
+    while (inFile >> user >> name >> address >> product >> weight >> trackingNumber) {
+        generatedTrackingNumbers.insert(trackingNumber);  // ใช้ได้ เพราะอยู่ในคลาส Sender
+    }
+
+    inFile.close();
+}
 
 string Sender::generateTrackingNumber() {
     string trackingNumber;
     do {
+        Sender::loadUsedTrackingNumbers("packages.txt");
         trackingNumber = "TN" + to_string(rand() % 1000000); // สุ่มเลข 6 หลัก
     } while (generatedTrackingNumbers.find(trackingNumber) != generatedTrackingNumbers.end()); // ตรวจสอบเลขซ้ำ
     generatedTrackingNumbers.insert(trackingNumber); // เก็บหมายเลขที่สุ่มแล้ว

@@ -25,6 +25,7 @@ public:
     static string generateTrackingNumber();  // ฟังก์ชัน static
     void show_node() override;
     void saveToFile(const string& filename);
+    static void loadUsedTrackingNumbers(const string& filename); // <<< เพิ่มบรรทัดนี้
 };
 
 void sender_menu(string& username);

@@ -34,6 +34,19 @@ inline int sender_getChoice() {
     return c;
 }
 
+inline int Deli_getChoice() {
+    int c;
+    cout << "\n===== DELIVERYSTAFF MENU =====" << endl;
+    cout << "1. Check Track" << endl;
+    cout << "2. passsadu" << endl;
+    cout << "3. Back" << endl;
+    cout << "4. Exit" << endl;
+    cout << "Enter your choice: ";
+    cin >> c;
+    clearScreen();
+    
+    return c;
+}
 
 inline int sender_or_Deli() {
     int c;

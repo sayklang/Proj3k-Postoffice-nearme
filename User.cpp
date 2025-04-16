@@ -1,5 +1,6 @@
 #include "User.h"
 #include "Sender.h"
+#include "DeliveryStaff.h"
 #include "Utils.h"
 #include <iostream>
 #include <limits>
@@ -34,7 +35,7 @@ void User::LoginSystem() {
         if (c == 1) {
             sender_menu(username);
         } else if (c == 2) {
-            // Deli_menu(); // ใส่เมนูของ Delivery
+            Deli_menu(username);
         } else if (c == 3) {
            break;
         } 

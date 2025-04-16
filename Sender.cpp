@@ -2,7 +2,6 @@
 #include "Sender.h"
 #include "User.h"  
 
-
 using namespace std;
 
 Sender::Sender(int l, string n, string a, string p, float w,string u,string t) : NODE(l) {

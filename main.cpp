@@ -5,9 +5,9 @@
 
 #include "User.h"
 #include "Menu.h"
+#include "Utils.h"  // Include the new header
 
 using namespace std;
-
 
 int main(){
 User user;
@@ -16,6 +16,11 @@ while (choice!=3)
 {
 showMenu();
 choice=getChoice();
+/*if (choice=101)
+{
+E3();
+}
+else*/
     switch (choice)
     {
     case 1:

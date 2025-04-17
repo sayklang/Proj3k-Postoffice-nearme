@@ -3,42 +3,42 @@
 #include <fstream>
 #include <regex> 
 #include <stdlib.h>
+#include <limits> // Add this for numeric_limits
 #include "User.h"
 #include "Menu.h"
 #include "Utils.h"
+
 
 using namespace std;
 
 int main() {
     User user;
-    int choice = 0;
+    int choice = 0; // Initialize the choice variable
     
     while (choice != 3) {
+        clearScreen();  // Use the clearScreen() function from Utils.h
         showMenu();
         choice = getChoice();
         
         switch (choice) {
-            case 1:
-                user.LoginSystem();
-                break;
-            case 2:
-                user.RegisterSystem();
-                break;
-            case 3:
-                cout << "\033[1;31mExiting...\033[0m\n";
-                clearScreen();
-                break;
-            case 101: // Easter egg
-                E3();
-                cout << "\nPress Enter to continue...";
-                cin.ignore();
-                cin.get();
-                break;
-            default:
-                cout << "\033[1;31m===================================================\n";
-                cout << "Invalid choice. Please try again.\n";
-                cout << "===================================================\033[0m" << endl;
-                break;
+        case 1:
+            user.LoginSystem();
+            break;
+        case 2:
+            user.RegisterSystem();
+            break;
+        case 3:
+            cout << "Exiting...\n";
+            clearScreen();
+            break;
+        default:
+            cout << "\033[1;31m===================================================\n";
+            cout << "Invalid choice. Please try again.\n";
+            cout << "===================================================\033[0m" << endl;
+            // Add a pause so user can read the message
+            cout << "Press Enter to continue...";
+            cin.get();
+            break;
         }
     }
     

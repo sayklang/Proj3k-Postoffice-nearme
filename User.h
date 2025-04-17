@@ -105,6 +105,7 @@ public:
 
         if (inFile.is_open()) {
             while (inFile >> existingUsername >> existingPassword) {
+                // Removed debug output here
                 if (existingUsername == username) {
                     inFile.close();
                     return true;

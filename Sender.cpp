@@ -1,6 +1,9 @@
 #include "Sender.h"
+#include "Utils.h"
 #include <fstream> // สำหรับการอ่าน/เขียนไฟล์
 #include <sstream> 
+#include <iomanip>
+
 
 set<string> Sender::generatedTrackingNumbers; // การประกาศตัวแปร static
 
@@ -16,10 +19,14 @@ Sender::~Sender() {
 }
 
 void Sender::show_node() {
-    cout << "ชื่อผู้รับ: " << name << endl;
-    cout << "ที่อยู่: " << address << endl;
-    cout << "สินค้า: " << product << endl;
-    cout << "น้ำหนัก: " << weight << " kg" << endl;
+    cout << "\033[1;36m╔════════════════════════════════════════╗\033[0m" << endl;
+    cout << "\033[1;36m║           PACKAGE DETAILS              ║\033[0m" << endl;
+    cout << "\033[1;36m╠════════════════════════════════════════╣\033[0m" << endl;
+    cout << "\033[1;36m║\033[0m \033[1;32mRecipient:\033[0m " << setw(28) << left << name << "\033[1;36m║\033[0m" << endl;
+    cout << "\033[1;36m║\033[0m \033[1;32mAddress:\033[0m " << setw(30) << left << address << "\033[1;36m║\033[0m" << endl;
+    cout << "\033[1;36m║\033[0m \033[1;32mProduct:\033[0m " << setw(30) << left << product << "\033[1;36m║\033[0m" << endl;
+    cout << "\033[1;36m║\033[0m \033[1;32mWeight:\033[0m " << setw(24) << left << (to_string(weight) + " kg") << "\033[1;36m║\033[0m" << endl;
+    cout << "\033[1;36m╚════════════════════════════════════════╝\033[0m" << endl;
 }
 void Sender::loadUsedTrackingNumbers(const string& filename) {
     ifstream inFile(filename);
@@ -68,7 +75,10 @@ void sender_menu(string& username) {
         switch (choice) {
             case 1:
                 l = (rand() % 100000);
-                cin.ignore();  // Clear input buffer
+              //  cin.ignore();  // Clear input buffer
+                cout << "\033[1;33m╔════════════════════════════════════════╗\033[0m" << endl;
+                cout << "\033[1;33m║        NEW PACKAGE INFORMATION         ║\033[0m" << endl;
+                cout << "\033[1;33m╚════════════════════════════════════════╝\033[0m" << endl;
                 cout << "\033[1;33mInput ชื่อผู้รับ: \033[0m";
                 getline(cin, n);
                 cout << "\033[1;33mInput ที่อยู่: \033[0m";
@@ -91,12 +101,14 @@ void sender_menu(string& username) {
                 }
                 break;
             case 2:
-                cout << "\033[1;36mแสดงข้อมูลของทุกพัสดุ: \033[0m" << endl;
-                cout << "--------------------------" << endl;
+            cout << "\033[1;36m╔════════════════════════════════════════╗\033[0m" << endl;
+            cout << "\033[1;36m║           YOUR PACKAGES                ║\033[0m" << endl;
+            cout << "\033[1;36m╚════════════════════════════════════════╝\033[0m" << endl;
                 showUserPackages(username);
                 cout << "\nPress Enter to continue...";
                 cin.ignore();
                 cin.get();
+                clearScreen();
                 break;
             case 3:
                 cout << "\033[1;32mGoing back to previous menu...\033[0m" << endl;

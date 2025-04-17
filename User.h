@@ -5,7 +5,7 @@
 #include <fstream>
 #include <regex>
 #include <termios.h>
-#include <unistd.h> // สำหรับ Linux
+#include <unistd.h> // สำหรับ Terminal
 
 
 using namespace std;
@@ -25,19 +25,25 @@ public:
 
     friend class Sender;
 
-    // สำหรับ Linux: แสดง * ตอนกรอกรหัสผ่าน
+    // สำหรับ Terminal: แสดง * ตอนกรอกรหัสผ่าน
     static string getPasswordMasked() {
         string password;
         struct termios oldt, newt;
-
+    
+        // ดึงค่าการตั้งค่าปัจจุบันของ terminal
         tcgetattr(STDIN_FILENO, &oldt);
         newt = oldt;
-        newt.c_lflag &= ~ECHO;
+    
+        // ปิด ICANON กับ ECHO เพื่อให้รับตัวอักษรทีละตัวและไม่แสดงผล
+        newt.c_lflag &= ~(ECHO | ICANON);
         tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-
+    
         char ch;
-        while ((ch = getchar()) != '\n') {
-            if (ch == 127 || ch == 8) {
+        while (true) {
+            ch = getchar();
+            if (ch == '\n') break; // กด Enter เพื่อจบการกรอก
+    
+            if (ch == 127 || ch == 8) { // backspace
                 if (!password.empty()) {
                     password.pop_back();
                     cout << "\b \b";
@@ -45,11 +51,12 @@ public:
             } else {
                 password += ch;
                 cout << '*';
-                cout.flush(); // ให้ * แสดงทันที
             }
+            cout.flush(); // แสดงผลทันที
         }
+    
         cout << endl;
-        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+        tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // คืนค่าการตั้งค่าเดิม
         return password;
     }
 

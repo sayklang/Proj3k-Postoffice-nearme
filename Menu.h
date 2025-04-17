@@ -36,25 +36,24 @@ inline int sender_getChoice() {
 
 inline int Deli_getChoice() {
     int c;
-    cout << "\n===== DELIVERYSTAFF MENU =====" << endl;
-    cout << "1. Check Track" << endl;
-    cout << "2. passsadu" << endl;
-    cout << "3. Back" << endl;
-    cout << "4. Exit" << endl;
-    cout << "Enter your choice: ";
+    cout << "\n\033[1;36m===== DELIVERYSTAFF MENU =====\033[0m" << endl;
+    cout << "\033[1;32m1. Check Package by Tracking Number\033[0m" << endl;
+    cout << "\033[1;32m2. Update Package Status\033[0m" << endl;
+    cout << "\033[1;31m3. Back\033[0m" << endl;
+    cout << "\033[1;33mEnter your choice: \033[0m";
     cin >> c;
     clearScreen();
-    
     return c;
 }
 
 inline int sender_or_Deli() {
     int c;
-    cout << "\n===== MENU =====" << endl;
-    cout << "1. Sender" << endl;
-    cout << "2. Delivery" << endl;
-    cout << "3. Exit" << endl;
-    cout << "Enter your choice: ";
+    clearScreen();
+    cout << "\n\033[1;36m===== MAIN MENU =====\033[0m" << endl;
+    cout << "\033[1;32m1. Sender Mode\033[0m" << endl;
+    cout << "\033[1;32m2. Delivery Staff Mode\033[0m" << endl;
+    cout << "\033[1;31m3. Logout\033[0m" << endl;
+    cout << "\033[1;33mEnter your choice: \033[0m";
     cin >> c;
     clearScreen();
     return c;

@@ -14,11 +14,11 @@ void User::LoginSystem() {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     if (!User::usernameExists("users.txt", username)) {
-        clearScreen();
         cout << "\033[1;31m===================================================\n";
         cout << "Username does not exist. Please check your username.\n";
         cout << "===================================================\033[0m" << endl;
-        clearScreen();
+        cout << "Press Enter to continue...";
+        cin.get(); // Wait for enter key
         return;
     }
     
@@ -30,28 +30,28 @@ void User::LoginSystem() {
         cout << "\033[1;32m===================================================\n";
         cout << "Login successful!\n";
         cout << "===================================================\033[0m" << endl;
-    int c = 0;
-    while (true) {
-        c = sender_or_Deli();
-        clearScreen();
-        if (c == 1) {
-            sender_menu(username);
-        } else if (c == 2) {
-            Deli_menu(username);
-        } else if (c == 3) {
-           break;
-        } 
-        else {
-            cout << "Invalid choice. Please try again.\n";
-            break;
+        int c = 0;
+        while (true) {
+            c = sender_or_Deli();
+            clearScreen();
+            if (c == 1) {
+                sender_menu(username);
+            } else if (c == 2) {
+                Deli_menu(username);
+            } else if (c == 3) {
+               break;
+            } 
+            else {
+                cout << "Invalid choice. Please try again.\n";
+                break;
+            }
         }
-    }
-
     } else {
-        clearScreen();
         cout << "\033[1;31m===================================================\n";
         cout << "Invalid password for username: " << username << endl;
         cout << "===================================================\033[0m" << endl;
+        cout << "Press Enter to continue...";
+        cin.get(); // Wait for enter key
     }
 }
 
@@ -129,4 +129,3 @@ void User::saveToFile(const string& filename) {
         cout << " Failed to open file for writing!" << endl;
     }
 }
-

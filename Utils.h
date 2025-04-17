@@ -5,9 +5,13 @@
 #include <unistd.h> // สำหรับ usleep()
 
 
+// Cross-platform clear screen function
 inline void clearScreen() {
-    usleep(1000000); // หน่วงเวลา 1 วินาทีก่อนล้างหน้าจอ
-    std::cout << "\033[2J\033[1;1H"; // ล้างหน้าจอสำหรับ Linux
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");  // For Linux/Unix
+    #endif
 }
 
 #endif // UTILS_H

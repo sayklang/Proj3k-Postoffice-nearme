@@ -54,30 +54,74 @@ void Sender::saveToFile(const string& filename) {
         cout << "Failed to open file!" << endl;
     }
 }
+
 void sender_menu(string& username) {
     LL A;
     float w;
     string n, a, p, t;
     int l;
     int choice;
+    bool validWeight;
 
     cout << "\033[1;34mLogged in as: " << username << " (Sender)\033[0m" << endl;
 
     do {
         choice = sender_getChoice();
         switch (choice) {
-            case 1:
+            case 1: {  // Added braces to create a new scope
                 l = (rand() % 100000);
-                cin.ignore();  // Clear input buffer
-                cout << "\033[1;33mInput ชื่อผู้รับ: \033[0m";
-                getline(cin, n);
-                cout << "\033[1;33mInput ที่อยู่: \033[0m";
-                getline(cin, a);
-                cout << "\033[1;33mInput สินค้า: \033[0m";
-                getline(cin, p);
-                cout << "\033[1;33mInput น้ำหนัก: \033[0m";
-                cin >> w;
-                // สร้าง tracking number ใหม่
+                cout << "\033[1;33m╔════════════════════════════════════════╗\033[0m" << endl;
+                cout << "\033[1;33m║        NEW PACKAGE INFORMATION         ║\033[0m" << endl;
+                cout << "\033[1;33m╚════════════════════════════════════════╝\033[0m" << endl;
+                
+                // Validate recipient name input
+                do {
+                    cout << "\033[1;33mInput ชื่อผู้รับ: \033[0m";
+                    getline(cin, n);
+                    if (n.empty()) {
+                        cout << "\033[1;31mRecipient name cannot be empty. Please enter a name.\033[0m" << endl;
+                    }
+                } while (n.empty());
+                
+                // Validate address input
+                do {
+                    cout << "\033[1;33mInput ที่อยู่: \033[0m";
+                    getline(cin, a);
+                    if (a.empty()) {
+                        cout << "\033[1;31mAddress cannot be empty. Please enter an address.\033[0m" << endl;
+                    }
+                } while (a.empty());
+                
+                // Validate product input
+                do {
+                    cout << "\033[1;33mInput สินค้า: \033[0m";
+                    getline(cin, p);
+                    if (p.empty()) {
+                        cout << "\033[1;31mProduct cannot be empty. Please enter a product.\033[0m" << endl;
+                    }
+                } while (p.empty());
+                
+                // Validate weight input
+                validWeight = false;
+                do {
+                    cout << "\033[1;33mInput น้ำหนัก: \033[0m";
+                    if (cin >> w) {
+                        if (w <= 0) {
+                            cout << "\033[1;31mWeight must be greater than 0. Please enter a valid weight.\033[0m" << endl;
+                        } else {
+                            validWeight = true;
+                        }
+                    } else {
+                        cout << "\033[1;31mInvalid input. Please enter a numeric value for weight.\033[0m" << endl;
+                        cin.clear(); // Clear error flag
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
+                    }
+                } while (!validWeight);
+                
+                // Clear input buffer after reading numeric input
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                
+                // Generate tracking number and create package
                 t = Sender::generateTrackingNumber();
                 {
                     Sender* z = new Sender(l, n, a, p, w, username);
@@ -86,27 +130,33 @@ void sender_menu(string& username) {
                     cout << "\033[1;32mPackage created successfully!\033[0m" << endl;
                     cout << "\033[1;32mTracking Number: " << t << "\033[0m" << endl;
                     cout << "\nPress Enter to continue...";
-                    cin.ignore();
                     cin.get();
                 }
                 break;
-            case 2:
-                cout << "\033[1;36mแสดงข้อมูลของทุกพัสดุ: \033[0m" << endl;
-                cout << "--------------------------" << endl;
+            }
+            case 2: {  // Added braces to create a new scope
+                cout << "\033[1;36m╔════════════════════════════════════════╗\033[0m" << endl;
+                cout << "\033[1;36m║           YOUR PACKAGES                ║\033[0m" << endl;
+                cout << "\033[1;36m╚════════════════════════════════════════╝\033[0m" << endl;
                 showUserPackages(username);
                 cout << "\nPress Enter to continue...";
                 cin.ignore();
                 cin.get();
+                clearScreen();
                 break;
-            case 3:
+            }
+            case 3: {  // Added braces to create a new scope
                 cout << "\033[1;32mGoing back to previous menu...\033[0m" << endl;
                 return;
-            case 4:
+            }
+            case 4: {  // Added braces to create a new scope
                 cout << "\033[1;31mExiting program...\033[0m" << endl;
                 exit(0);
-            default:
+            }
+            default: {  // Added braces to create a new scope
                 cout << "\033[1;31mInvalid choice. Please try again.\033[0m" << endl;
                 break;
+            }
         }
     } while (true);
 }

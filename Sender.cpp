@@ -8,12 +8,13 @@
 
 set<string> Sender::generatedTrackingNumbers; // การประกาศตัวแปร static
 
-Sender::Sender(int l, string n, string a, string p, float w, string u) : NODE(l) {
+Sender::Sender(int l, string n, string a, string p, float w, string u, string t) : NODE(l) {
     name = n;
     address = a;
     product = p;
     weight = w;
     username=u;
+    trackingNumber = t;
 }
 Sender::~Sender() {
   
@@ -65,7 +66,7 @@ string Sender::generateTrackingNumber() {
 void Sender::saveToFile(const string& filename) {
     ofstream outFile(filename, ios::app);
     if (outFile.is_open()) {
-        outFile << username << " " << name << " " << address << " " << product << " " << weight << " " << generateTrackingNumber() << endl;
+        outFile << username << " " << name << " " << address << " " << product << " " << weight << " " << trackingNumber << endl;
         outFile.close();
         
         // Sort the packages by username after adding a new one
@@ -144,7 +145,7 @@ void sender_menu(string& username) {
                 // Generate tracking number and create package
                 t = Sender::generateTrackingNumber();
                 {
-                    Sender* z = new Sender(l, n, a, p, w, username);
+                    Sender* z = new Sender(l, n, a, p, w, username, t);
                     A.add_node(z);
                     z->saveToFile("packages.txt");
                     cout << "\033[1;32mPackage created successfully!\033[0m" << endl;

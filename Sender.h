@@ -17,10 +17,11 @@ private:
     string product;
     float weight;
     string username;
+    string trackingNumber;
     static set<string> generatedTrackingNumbers; // ใช้เพื่อเก็บหมายเลขที่สุ่มแล้ว
 
 public:
-    Sender(int, string, string, string, float, string);  // คอนสตรัคเตอร์
+    Sender(int, string, string, string, float, string, string);  // คอนสตรัคเตอร์
     ~Sender();
     static string generateTrackingNumber();  // ฟังก์ชัน static
     void show_node() override;

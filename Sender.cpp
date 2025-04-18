@@ -1,4 +1,5 @@
 #include "Sender.h"
+#include "PackageNode.h"
 #include "Utils.h"
 #include <fstream> // สำหรับการอ่าน/เขียนไฟล์
 #include <sstream> 
@@ -46,9 +47,18 @@ string Sender::generateTrackingNumber() {
     string trackingNumber;
     do {
         Sender::loadUsedTrackingNumbers("packages.txt");
-        trackingNumber = "TN" + to_string(rand() % 1000000); // สุ่มเลข 6 หลัก
-    } while (generatedTrackingNumbers.find(trackingNumber) != generatedTrackingNumbers.end()); // ตรวจสอบเลขซ้ำ
-    generatedTrackingNumbers.insert(trackingNumber); // เก็บหมายเลขที่สุ่มแล้ว
+        
+        // Generate a random number between 0 and 999999
+        int randomNum = rand() % 1000000;
+        
+        // Convert to string and pad with leading zeros to ensure 6 digits
+        stringstream ss;
+        ss << "TN" << setw(6) << setfill('0') << randomNum;
+        trackingNumber = ss.str();
+        
+    } while (generatedTrackingNumbers.find(trackingNumber) != generatedTrackingNumbers.end());
+    
+    generatedTrackingNumbers.insert(trackingNumber);
     return trackingNumber;
 }
 
@@ -57,6 +67,9 @@ void Sender::saveToFile(const string& filename) {
     if (outFile.is_open()) {
         outFile << username << " " << name << " " << address << " " << product << " " << weight << " " << generateTrackingNumber() << endl;
         outFile.close();
+        
+        // Sort the packages by username after adding a new one
+        sortPackagesByUsername();
     } else {
         cout << "Failed to open file!" << endl;
     }

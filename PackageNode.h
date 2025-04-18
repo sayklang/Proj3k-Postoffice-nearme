@@ -1,3 +1,5 @@
+// Add this function to your project, perhaps in PackageNode.h or create a new utility file
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -5,7 +7,7 @@
 #include <string>
 #include <sstream>
 
-void sortPackagesByWeight() {
+void sortPackagesByUsername() {
     // Read packages
     std::ifstream inFile("packages.txt");
     if (!inFile) {
@@ -14,31 +16,29 @@ void sortPackagesByWeight() {
     }
     
     // Store package data in vector
-    std::vector<std::pair<float, std::string>> packages;
+    std::vector<std::pair<std::string, std::string>> packages;
     std::string line;
     
     while (std::getline(inFile, line)) {
         std::istringstream iss(line);
-        std::string username, name, address, product, trackingNumber, status;
-        float weight;
+        std::string username;
         
-        if (iss >> username >> name >> address >> product >> weight >> trackingNumber) {
-            // Optionally read status if present
-            iss >> status;
-            // Store weight as key for sorting, and full line as value
-            packages.push_back(std::make_pair(weight, line));
+        // Extract just the username (first word in each line)
+        if (iss >> username) {
+            // Store username as key for sorting, and full line as value
+            packages.push_back(std::make_pair(username, line));
         }
     }
     
     inFile.close();
     
-    // Sort packages by weight (ascending)
+    // Sort packages by username (alphabetically)
     std::sort(packages.begin(), packages.end());
     
-    // Write sorted packages to new file
-    std::ofstream outFile("sortpackage.txt");
+    // Write sorted packages back to the original file
+    std::ofstream outFile("packages.txt");
     if (!outFile) {
-        std::cerr << "Error: Cannot create sortpackage.txt" << std::endl;
+        std::cerr << "Error: Cannot open packages.txt for writing" << std::endl;
         return;
     }
     
@@ -47,6 +47,4 @@ void sortPackagesByWeight() {
     }
     
     outFile.close();
-    
-    std::cout << "Packages sorted by weight and saved to sortpackage.txt" << std::endl;
 }

@@ -70,7 +70,7 @@ void Sender::saveToFile(const string& filename) {
         outFile.close();
         
         // Sort the packages by username after adding a new one
-        sortPackagesByUsername();
+        sortPackagesByUsername_LL();
     } else {
         cout << "Failed to open file!" << endl;
     }

@@ -1,5 +1,5 @@
-#include <iostream>  
-#include <string>
+#include <iostream>  //C++
+#include <string>   
 #include <fstream>
 #include <regex> 
 #include <stdlib.h>
@@ -12,7 +12,7 @@
 using namespace std;
 
 int main() {
-    srand(time(NULL));
+    srand(time(NULL)); // ตั้งค่า seed ตามเวลากันเลขซ้ำ
     User user;
     int choice = 0; // Initialize the choice variable
     

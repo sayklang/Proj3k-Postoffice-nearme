@@ -1,50 +1,94 @@
-// Add this function to your project, perhaps in PackageNode.h or create a new utility file
+#ifndef PACKAGENODE_H
+#define PACKAGENODE_H
 
 #include <iostream>
 #include <fstream>
-#include <vector>
-#include <algorithm>
 #include <string>
 #include <sstream>
 
-void sortPackagesByUsername() {
-    // Read packages
-    std::ifstream inFile("packages.txt");
-    if (!inFile) {
-        std::cerr << "Error: Cannot open packages.txt" << std::endl;
-        return;
+struct PackageNode {
+    std::string username;
+    std::string lineData;
+    PackageNode* next;
+
+    PackageNode(const std::string& user, const std::string& line)
+        : username(user), lineData(line), next(nullptr) {}
+};
+
+class PackageList {
+private:
+    PackageNode* head;
+
+    // ตัวช่วยแทรกเรียงตามตัวอักษร
+    void insertSorted(PackageNode* newNode) {
+        if (!head || newNode->username < head->username) {
+            newNode->next = head;
+            head = newNode;
+            return;
+        }
+
+        PackageNode* current = head;
+        while (current->next && current->next->username < newNode->username) {
+            current = current->next;
+        }
+
+        newNode->next = current->next;
+        current->next = newNode;
     }
-    
-    // Store package data in vector
-    std::vector<std::pair<std::string, std::string>> packages;
-    std::string line;
-    
-    while (std::getline(inFile, line)) {
-        std::istringstream iss(line);
-        std::string username;
-        
-        // Extract just the username (first word in each line)
-        if (iss >> username) {
-            // Store username as key for sorting, and full line as value
-            packages.push_back(std::make_pair(username, line));
+
+public:
+    PackageList() : head(nullptr) {}
+
+    ~PackageList() {
+        while (head) {
+            PackageNode* temp = head;
+            head = head->next;
+            delete temp;
         }
     }
-    
-    inFile.close();
-    
-    // Sort packages by username (alphabetically)
-    std::sort(packages.begin(), packages.end());
-    
-    // Write sorted packages back to the original file
-    std::ofstream outFile("packages.txt");
-    if (!outFile) {
-        std::cerr << "Error: Cannot open packages.txt for writing" << std::endl;
-        return;
+
+    void loadFromFile(const std::string& filename) {
+        std::ifstream inFile(filename);
+        if (!inFile) {
+            std::cerr << "Error: Cannot open " << filename << std::endl;
+            return;
+        }
+
+        std::string line;
+        while (std::getline(inFile, line)) {
+            std::istringstream iss(line);
+            std::string username;
+            if (iss >> username) {
+                PackageNode* newNode = new PackageNode(username, line);
+                insertSorted(newNode);
+            }
+        }
+
+        inFile.close();
     }
-    
-    for (const auto& package : packages) {
-        outFile << package.second << std::endl;
+
+    void writeToFile(const std::string& filename) {
+        std::ofstream outFile(filename);
+        if (!outFile) {
+            std::cerr << "Error: Cannot open " << filename << " for writing" << std::endl;
+            return;
+        }
+
+        PackageNode* current = head;
+        while (current) {
+            outFile << current->lineData << std::endl;
+            current = current->next;
+        }
+
+        outFile.close();
     }
-    
-    outFile.close();
+};
+
+// ฟังก์ชันสำหรับใช้เรียกใน main ได้เลย
+void sortPackagesByUsername_LL() {
+    PackageList list;
+    list.loadFromFile("packages.txt");
+    list.writeToFile("packages.txt");
 }
+
+#endif // PACKAGENODE_H

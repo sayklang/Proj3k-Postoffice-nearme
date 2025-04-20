@@ -46,8 +46,8 @@ void Sender::loadUsedTrackingNumbers(const string& filename) {
 
 string Sender::generateTrackingNumber() {
     string trackingNumber;
+    Sender::loadUsedTrackingNumbers("packages.txt");
     do {
-        Sender::loadUsedTrackingNumbers("packages.txt");
         
         // Generate a random number between 0 and 999999
         int randomNum = rand() % 1000000;

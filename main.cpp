@@ -3,6 +3,7 @@
 #include <fstream>
 #include <regex> 
 #include <stdlib.h>
+#include <ctime>
 #include <limits> // Add this for numeric_limits
 #include "User.h"
 #include "Menu.h"
@@ -11,6 +12,7 @@
 using namespace std;
 
 int main() {
+    srand(time(NULL));
     User user;
     int choice = 0; // Initialize the choice variable
     
